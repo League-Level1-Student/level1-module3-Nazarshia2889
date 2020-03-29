@@ -5,6 +5,8 @@ package _03_jukebox;
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -12,7 +14,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -20,14 +25,40 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /*   If you don't have javazoom.jar in your project, you can download it from here: http://bit.ly/javazoom
  *   Right click your project and add it as a JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
+public class Jukebox implements Runnable, ActionListener {
+
+	JButton left = new JButton();
+	JButton right = new JButton();
+	Song s = new Song("Rock 808 beat.mp3");
+	Song ss = new Song("saxu.mp3");
 
     public void run() {
 
 		// 1. Find an mp3 on your computer or on the Internet.
 		// 2. Create a Song object for that mp3
+    
+    	
 
 		// 3. Play the Song
+    	JFrame f = new JFrame();
+    	JPanel p = new JPanel();
+    	JButton left = new JButton();
+    	JButton right = new JButton();
+    	
+    	f.setVisible(true);
+    	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	f.setSize(500, 100);
+    	
+    	p.add(left);
+    	p.add(right);
+    	f.add(p);
+    	
+    	
+    	left.addActionListener(this);
+    	right.addActionListener(this);
+    	
+    	left.setText("Rock");
+    	right.setText("Sax");
 
 		/*
 		 * 4. Create a user interface for your Jukebox so that the user can to
@@ -39,11 +70,33 @@ public class Jukebox implements Runnable {
     }
     
     
+	private void addActionListener(Jukebox jukebox) {
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+
 	/* Use this method to add album covers to your Panel. */
 	private JLabel loadImage(String fileName) {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton buttonPressed = (JButton) e.getSource();
+		if(buttonPressed == left) {
+			s.play();
+			
+		}
+		else if(buttonPressed == right) {
+			ss.play();
+		}
+		
 	}
 
 }
